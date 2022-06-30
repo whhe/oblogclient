@@ -16,9 +16,24 @@ public interface FieldParseListener {
     /**
      * Handle the filed parsing result.
      *
-     * @param prev The original field.
-     * @param next The field after parsing.
-     * @throws Exception When exception occurs.
+     * @param fieldName
+     * @param type
+     * @param encoding
+     * @param value
+     * @param notNUll
+     * @param isPrev
      */
-    void parseNotify(DataMessage.Record.Field prev, DataMessage.Record.Field next) throws Exception;
+    void parseNotify(
+            String fieldName,
+            int type,
+            String encoding,
+            ByteString value,
+            boolean notNUll,
+            boolean isPrev);
+
+    // only support value, cause we already know schema info
+    void parseNotify(int type, ByteString value, String encoding, boolean isPrev);
+
+    // hint to identify if schema info include fieldName, type, encoding, not null is needed
+    boolean needSchemaInfo();
 }
